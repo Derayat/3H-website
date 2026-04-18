@@ -1,267 +1,291 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3 Horizons Esports</title>
+<title>3 Horizons Esports</title>
 
-  <style>
-    html { scroll-behavior: smooth; }
+<style>
+html { scroll-behavior: smooth; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #00ff66;
-      background: black;
-      overflow-x: hidden;
-    }
+body {
+  margin:0;
+  font-family:Arial;
+  color:#00ff66;
+  background:black;
+  overflow-x:hidden;
+}
 
-    /* BACKGROUND */
-    body::before {
-      content:"";
-      position:fixed;
-      width:200%;
-      height:200%;
-      top:-50%;
-      left:-50%;
-      background: linear-gradient(270deg,#000,#001a0d,#000,#002b15);
-      background-size:600% 600%;
-      animation:bgMove 12s infinite;
-      z-index:-3;
-    }
+/* MOVING BG */
+body::before {
+  content:"";
+  position:fixed;
+  width:300%;
+  height:300%;
+  top:-100%;
+  left:-100%;
+  background:linear-gradient(270deg,#000,#001a0d,#00331a,#001a0d,#000);
+  background-size:800% 800%;
+  animation:bgMove 15s ease infinite;
+  z-index:-3;
+}
 
-    @keyframes bgMove {
-      0%{background-position:0%}
-      50%{background-position:100%}
-      100%{background-position:0%}
-    }
+@keyframes bgMove {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-    /* ENTRY */
-    #entry {
-      position:fixed;
-      width:100%;
-      height:100%;
-      background:black;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex-direction:column;
-      z-index:999;
-      cursor:pointer;
-    }
+/* GRID */
+body::after {
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  top:-50%;
+  left:-50%;
+  background:
+    linear-gradient(rgba(0,255,102,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,102,0.05) 1px, transparent 1px);
+  background-size:60px 60px;
+  animation:gridMove 10s linear infinite;
+  z-index:-2;
+}
 
-    #entry h1 {
-      font-size:60px;
-      animation:pulse 2s infinite;
-    }
+@keyframes gridMove {
+  from{transform:translate(0,0)}
+  to{transform:translate(60px,60px)}
+}
 
-    @keyframes pulse {
-      0%,100%{text-shadow:0 0 10px #0f0}
-      50%{text-shadow:0 0 40px #0f0}
-    }
+/* ENTRY */
+#entry {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:999;
+  cursor:pointer;
+}
 
-    #main { display:none; }
+#entry h1 {
+  font-size:60px;
+  animation:pulse 2s infinite;
+}
 
-    /* HERO */
-    .hero {
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-    }
+@keyframes pulse {
+  0%,100%{text-shadow:0 0 10px #0f0}
+  50%{text-shadow:0 0 40px #0f0}
+}
 
-    .hero img {
-      width:150px;
-      animation:float 3s infinite;
-    }
+#main { display:none; }
 
-    @keyframes float {
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-15px)}
-    }
+/* HERO */
+.hero {
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
 
-    .glitch {
-      font-size:80px;
-    }
+.hero img {
+  width:150px;
+  animation:float 3s infinite, glow 2s alternate infinite;
+}
 
-    .btn {
-      margin-top:20px;
-      padding:12px 30px;
-      border:2px solid #0f0;
-      background:none;
-      color:#0f0;
-      cursor:pointer;
-    }
+@keyframes float {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+}
 
-    section {
-      padding:120px 20px;
-      text-align:center;
-      opacity:0;
-      transform:translateY(40px);
-      transition:0.6s;
-    }
+@keyframes glow {
+  from{filter:drop-shadow(0 0 10px #0f0)}
+  to{filter:drop-shadow(0 0 30px #0f0)}
+}
 
-    h2 { font-size:40px; }
+.glitch { font-size:80px; }
 
-    .line {
-      width:100px;
-      height:3px;
-      background:#0f0;
-      margin:10px auto 40px;
-    }
+.btn {
+  margin-top:20px;
+  padding:12px 30px;
+  border:2px solid #0f0;
+  background:none;
+  color:#0f0;
+  cursor:pointer;
+}
 
-    .cards {
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:25px;
-    }
+section {
+  padding:120px 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.6s;
+}
 
-    .card {
-      width:280px;
-      padding:25px;
-      background:rgba(0,0,0,0.6);
-      border:1px solid #003b1f;
-      cursor:pointer;
-      transition:0.3s;
-    }
+h2 { font-size:40px; }
 
-    .card:hover {
-      box-shadow:0 0 20px #0f0;
-      transform:translateY(-6px);
-    }
+.line {
+  width:100px;
+  height:3px;
+  background:#0f0;
+  margin:10px auto 40px;
+}
 
-    .desc {
-      max-height:0;
-      overflow:hidden;
-      opacity:0;
-      transition:0.4s;
-      margin-top:10px;
-    }
+.cards {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:25px;
+}
 
-    .card.active .desc {
-      max-height:120px;
-      opacity:1;
-    }
+.card {
+  width:280px;
+  padding:25px;
+  background:rgba(0,0,0,0.6);
+  border:1px solid #003b1f;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    /* CTA */
-    .cta {
-      padding:120px;
-      font-size:28px;
-    }
+.card:hover {
+  box-shadow:0 0 20px #0f0;
+  transform:translateY(-6px);
+}
 
-    /* MUSIC BUTTON */
-    .music {
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      padding:10px;
-      border:1px solid #0f0;
-      cursor:pointer;
-    }
+.desc {
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:0.4s;
+  margin-top:10px;
+}
 
-  </style>
+.card.active .desc {
+  max-height:120px;
+  opacity:1;
+}
+
+/* CTA */
+.cta {
+  padding:120px;
+  font-size:28px;
+}
+
+/* MUSIC BTN */
+.music {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  padding:10px;
+  border:1px solid #0f0;
+  cursor:pointer;
+}
+
+</style>
 </head>
 
 <body>
 
 <!-- ENTRY -->
 <div id="entry">
-  <h1>3 HORIZONS</h1>
-  <p>CLICK TO ENTER</p>
+<h1>3 HORIZONS</h1>
+<p>CLICK TO ENTER</p>
 </div>
 
 <div id="main">
 
 <div class="hero">
-  <img src="./logo.png">
-  <div class="glitch">3 HORIZONS</div>
-  <p>Dominate. Adapt. Conquer.</p>
-  <button class="btn" onclick="join()">JOIN DISCORD</button>
+<img src="./logo.png">
+<div class="glitch">3 HORIZONS</div>
+<p>Dominate. Adapt. Conquer.</p>
+<button class="btn" onclick="join()">JOIN DISCORD</button>
 </div>
 
 <section>
-  <h2>ABOUT</h2>
-  <div class="line"></div>
-  <p>Fast-growing esports org.</p>
-  <p><b>300+ members in days.</b></p>
-  <div id="counter" style="font-size:40px;">0+</div>
+<h2>ABOUT</h2>
+<div class="line"></div>
+<p>Fast-growing esports organization.</p>
+<p><b>300+ members in days.</b></p>
+<div id="counter" style="font-size:40px;">0+</div>
 </section>
 
 <section>
-  <h2>GAMES</h2>
-  <div class="line"></div>
+<h2>GAMES</h2>
+<div class="line"></div>
 
-  <div class="cards">
+<div class="cards">
 
-    <div class="card" onclick="toggle(this)">
-      <h3>VALORANT</h3>
-      <p class="desc">Tactical FPS domination.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>VALORANT</h3>
+<p class="desc">Tactical FPS domination.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>CS2</h3>
-      <p class="desc">Precision-based combat.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>CS2</h3>
+<p class="desc">Precision-based combat.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>RAINBOW SIX SIEGE</h3>
-      <p class="desc">Strategic destruction gameplay.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>RAINBOW SIX SIEGE</h3>
+<p class="desc">Strategic destruction gameplay.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>ROCKET LEAGUE</h3>
-      <p class="desc">Mechanical esports football.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>ROCKET LEAGUE</h3>
+<p class="desc">Mechanical esports football.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>CALL OF DUTY</h3>
-      <p class="desc">Fast-paced shooter action.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>CALL OF DUTY</h3>
+<p class="desc">Fast-paced shooter action.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>CLASH ROYALE</h3>
-      <p class="desc">Mobile strategy battles.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>CLASH ROYALE</h3>
+<p class="desc">Mobile strategy battles.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>FORTNITE</h3>
-      <p class="desc">Build and survive fights.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>FORTNITE</h3>
+<p class="desc">Build and survive fights.</p>
+</div>
 
-  </div>
+</div>
 </section>
 
 <section>
-  <h2>FOUNDERS</h2>
-  <div class="line"></div>
+<h2>FOUNDERS</h2>
+<div class="line"></div>
 
-  <div class="cards">
+<div class="cards">
 
-    <div class="card" onclick="toggle(this)">
-      <h3>3H D3r4y4t</h3>
-      <p class="desc">Vision and leadership.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>3H D3r4y4t</h3>
+<p class="desc">Vision leader shaping direction.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>3H FSO</h3>
-      <p class="desc">Team coordination backbone.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>3H FSO</h3>
+<p class="desc">Core structure and coordination backbone.</p>
+</div>
 
-    <div class="card" onclick="toggle(this)">
-      <h3>3H mizzu</h3>
-      <p class="desc">Creative aggressive force.</p>
-    </div>
+<div class="card" onclick="toggle(this)">
+<h3>3H mizzu</h3>
+<p class="desc">Creative aggressive gameplay force.</p>
+</div>
 
-  </div>
+</div>
 
-  <p style="margin-top:20px;">
-    🧠 We have coaches to help you become pro.
-  </p>
+<p style="margin-top:20px;">
+🧠 We have coaches to help you become pro.
+</p>
 </section>
 
 <section class="cta">
-  YOU PLAY? PLAY GOOD. JOIN 3H NOW!
+YOU PLAY? PLAY GOOD. JOIN 3H NOW!
 </section>
 
 </div>
@@ -269,7 +293,7 @@
 <div class="music" onclick="music()">🔊</div>
 
 <audio id="bgm" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
 <script>
