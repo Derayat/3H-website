@@ -1,88 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>3 Horizons Esports</title>
+<title>3 Horizons</title>
 
 <style>
-html { scroll-behavior: smooth; }
-
-body {
+body{
   margin:0;
-  font-family:Arial;
-  color:#00ff66;
+  font-family: Arial;
   background:black;
+  color:#00ff66;
   overflow-x:hidden;
 }
 
-/* MOVING BG */
-body::before {
-  content:"";
-  position:fixed;
-  width:300%;
-  height:300%;
-  top:-100%;
-  left:-100%;
-  background:linear-gradient(270deg,#000,#001a0d,#00331a,#001a0d,#000);
-  background-size:800% 800%;
-  animation:bgMove 15s ease infinite;
-  z-index:-3;
-}
-
-@keyframes bgMove {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-/* GRID */
-body::after {
+/* SMOOTH BG */
+body::before{
   content:"";
   position:fixed;
   width:200%;
   height:200%;
   top:-50%;
   left:-50%;
-  background:
-    linear-gradient(rgba(0,255,102,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,102,0.05) 1px, transparent 1px);
-  background-size:60px 60px;
-  animation:gridMove 10s linear infinite;
-  z-index:-2;
+  background:linear-gradient(270deg,#000,#002b15,#000);
+  background-size:600% 600%;
+  animation:bg 12s infinite;
+  z-index:-1;
 }
 
-@keyframes gridMove {
-  from{transform:translate(0,0)}
-  to{transform:translate(60px,60px)}
+@keyframes bg{
+  0%{background-position:0%}
+  50%{background-position:100%}
+  100%{background-position:0%}
 }
 
 /* ENTRY */
-#entry {
+#entry{
   position:fixed;
   width:100%;
   height:100%;
-  background:black;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
+  background:black;
   z-index:999;
   cursor:pointer;
 }
 
-#entry h1 {
+#entry h1{
   font-size:60px;
-  animation:pulse 2s infinite;
+  animation:glow 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes glow{
   0%,100%{text-shadow:0 0 10px #0f0}
-  50%{text-shadow:0 0 40px #0f0}
+  50%{text-shadow:0 0 30px #0f0}
 }
 
-#main { display:none; }
+#main{display:none}
 
 /* HERO */
-.hero {
+.hero{
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -91,97 +68,76 @@ body::after {
   text-align:center;
 }
 
-.hero img {
-  width:150px;
-  animation:float 3s infinite, glow 2s alternate infinite;
+.hero img{
+  width:140px;
+  animation:float 3s infinite;
 }
 
-@keyframes float {
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-15px)}
+@keyframes float{
+  50%{transform:translateY(-10px)}
 }
 
-@keyframes glow {
-  from{filter:drop-shadow(0 0 10px #0f0)}
-  to{filter:drop-shadow(0 0 30px #0f0)}
+h1{
+  font-size:70px;
 }
 
-.glitch { font-size:80px; }
-
-.btn {
+/* BUTTON */
+.btn{
   margin-top:20px;
-  padding:12px 30px;
+  padding:12px 25px;
   border:2px solid #0f0;
   background:none;
   color:#0f0;
   cursor:pointer;
 }
 
-section {
-  padding:120px 20px;
+/* SECTIONS */
+section{
+  padding:100px 20px;
   text-align:center;
   opacity:0;
   transform:translateY(40px);
   transition:0.6s;
 }
 
-h2 { font-size:40px; }
+h2{font-size:40px}
 
-.line {
-  width:100px;
-  height:3px;
-  background:#0f0;
-  margin:10px auto 40px;
-}
-
-.cards {
+.cards{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:25px;
+  gap:20px;
 }
 
-.card {
-  width:280px;
-  padding:25px;
-  background:rgba(0,0,0,0.6);
-  border:1px solid #003b1f;
+.card{
+  width:260px;
+  padding:20px;
+  background:#000;
+  border:1px solid #033;
   cursor:pointer;
   transition:0.3s;
 }
 
-.card:hover {
+.card:hover{
   box-shadow:0 0 20px #0f0;
-  transform:translateY(-6px);
 }
 
-.desc {
+.desc{
   max-height:0;
   overflow:hidden;
   opacity:0;
-  transition:0.4s;
-  margin-top:10px;
+  transition:0.3s;
 }
 
-.card.active .desc {
-  max-height:120px;
+.card.active .desc{
+  max-height:100px;
   opacity:1;
 }
 
 /* CTA */
-.cta {
+.cta{
+  font-size:26px;
   padding:120px;
-  font-size:28px;
-}
-
-/* MUSIC BTN */
-.music {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  padding:10px;
-  border:1px solid #0f0;
-  cursor:pointer;
 }
 
 </style>
@@ -189,99 +145,71 @@ h2 { font-size:40px; }
 
 <body>
 
-<!-- ENTRY -->
 <div id="entry">
-<h1>3 HORIZONS</h1>
-<p>CLICK TO ENTER</p>
+  <h1>3 HORIZONS</h1>
+  <p>Click to Enter</p>
 </div>
 
 <div id="main">
 
 <div class="hero">
-<img src="./logo.png">
-<div class="glitch">3 HORIZONS</div>
-<p>Dominate. Adapt. Conquer.</p>
-<button class="btn" onclick="join()">JOIN DISCORD</button>
+  <img src="./logo.png">
+  <h1>3 HORIZONS</h1>
+  <p>Dominate. Adapt. Conquer.</p>
+  <button class="btn" onclick="join()">JOIN DISCORD</button>
 </div>
 
 <section>
 <h2>ABOUT</h2>
-<div class="line"></div>
-<p>Fast-growing esports organization.</p>
-<p><b>300+ members in days.</b></p>
-<div id="counter" style="font-size:40px;">0+</div>
+<p>300+ members in few days.</p>
 </section>
 
 <section>
 <h2>GAMES</h2>
-<div class="line"></div>
 
 <div class="cards">
 
 <div class="card" onclick="toggle(this)">
 <h3>VALORANT</h3>
-<p class="desc">Tactical FPS domination.</p>
+<p class="desc">Tactical FPS.</p>
 </div>
 
 <div class="card" onclick="toggle(this)">
 <h3>CS2</h3>
-<p class="desc">Precision-based combat.</p>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<h3>RAINBOW SIX SIEGE</h3>
-<p class="desc">Strategic destruction gameplay.</p>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<h3>ROCKET LEAGUE</h3>
-<p class="desc">Mechanical esports football.</p>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<h3>CALL OF DUTY</h3>
-<p class="desc">Fast-paced shooter action.</p>
-</div>
-
-<div class="card" onclick="toggle(this)">
-<h3>CLASH ROYALE</h3>
-<p class="desc">Mobile strategy battles.</p>
+<p class="desc">Precision shooter.</p>
 </div>
 
 <div class="card" onclick="toggle(this)">
 <h3>FORTNITE</h3>
-<p class="desc">Build and survive fights.</p>
+<p class="desc">Build and fight.</p>
 </div>
 
 </div>
+
 </section>
 
 <section>
 <h2>FOUNDERS</h2>
-<div class="line"></div>
 
 <div class="cards">
 
 <div class="card" onclick="toggle(this)">
 <h3>3H D3r4y4t</h3>
-<p class="desc">Vision leader shaping direction.</p>
+<p class="desc">Leader</p>
 </div>
 
 <div class="card" onclick="toggle(this)">
 <h3>3H FSO</h3>
-<p class="desc">Core structure and coordination backbone.</p>
+<p class="desc">Core</p>
 </div>
 
 <div class="card" onclick="toggle(this)">
 <h3>3H mizzu</h3>
-<p class="desc">Creative aggressive gameplay force.</p>
+<p class="desc">Aggression</p>
 </div>
 
 </div>
 
-<p style="margin-top:20px;">
-🧠 We have coaches to help you become pro.
-</p>
 </section>
 
 <section class="cta">
@@ -290,19 +218,11 @@ YOU PLAY? PLAY GOOD. JOIN 3H NOW!
 
 </div>
 
-<div class="music" onclick="music()">🔊</div>
-
-<audio id="bgm" loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-</audio>
-
 <script>
-
-document.getElementById("entry").onclick = () => {
+document.getElementById("entry").onclick=()=>{
   document.getElementById("entry").style.display="none";
   document.getElementById("main").style.display="block";
-  document.getElementById("bgm").play();
-};
+}
 
 function join(){
   window.open("https://discord.gg/qRxKTtVQz5");
@@ -312,23 +232,6 @@ function toggle(el){
   el.classList.toggle("active");
 }
 
-function music(){
-  let m=document.getElementById("bgm");
-  m.paused ? m.play() : m.pause();
-}
-
-/* COUNTER */
-let c=0;
-let t=300;
-let el=document.getElementById("counter");
-
-let i=setInterval(()=>{
-  c+=5;
-  el.innerText=c+"+";
-  if(c>=t) clearInterval(i);
-},50);
-
-/* SCROLL */
 const sections=document.querySelectorAll("section");
 window.addEventListener("scroll",()=>{
   sections.forEach(sec=>{
@@ -338,7 +241,6 @@ window.addEventListener("scroll",()=>{
     }
   });
 });
-
 </script>
 
 </body>
