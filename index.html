@@ -14,70 +14,55 @@
       overflow-x: hidden;
     }
 
-    /* NAVBAR */
-    .nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 15px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(6px);
-      z-index: 100;
+    /* BACKGROUND */
+    body::before {
+      content:"";
+      position:fixed;
+      width:200%;
+      height:200%;
+      top:-50%;
+      left:-50%;
+      background: linear-gradient(270deg,#000,#001a0d,#000,#002b15);
+      background-size:600% 600%;
+      animation:bgMove 12s infinite;
+      z-index:-3;
     }
 
-    .nav a {
-      color: #00ff66;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .nav a:hover {
-      text-shadow: 0 0 10px #00ff66;
+    @keyframes bgMove {
+      0%{background-position:0%}
+      50%{background-position:100%}
+      100%{background-position:0%}
     }
 
     /* ENTRY */
     #entry {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 999;
-      cursor: pointer;
-      animation: fadeIn 1s ease;
+      position:fixed;
+      width:100%;
+      height:100%;
+      background:black;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      z-index:999;
+      cursor:pointer;
     }
 
     #entry h1 {
-      font-size: 60px;
-      animation: zoom 1.5s ease, pulse 2s infinite;
-    }
-
-    @keyframes zoom {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      font-size:60px;
+      animation:pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0%,100% { text-shadow: 0 0 10px #00ff66; }
-      50% { text-shadow: 0 0 40px #00ff66; }
+      0%,100%{text-shadow:0 0 10px #0f0}
+      50%{text-shadow:0 0 40px #0f0}
     }
 
-    #main { display:none; animation: fadeUp 1s ease; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    #main { display:none; }
 
     /* HERO */
     .hero {
-      height: 100vh;
+      height:100vh;
       display:flex;
       flex-direction:column;
       justify-content:center;
@@ -86,25 +71,25 @@
     }
 
     .hero img {
-      width:160px;
-      animation: float 3s infinite;
+      width:150px;
+      animation:float 3s infinite;
     }
 
     @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-15px)}
     }
 
     .glitch {
-      font-size: 80px;
+      font-size:80px;
     }
 
     .btn {
       margin-top:20px;
       padding:12px 30px;
-      border:2px solid #00ff66;
+      border:2px solid #0f0;
       background:none;
-      color:#00ff66;
+      color:#0f0;
       cursor:pointer;
     }
 
@@ -121,7 +106,7 @@
     .line {
       width:100px;
       height:3px;
-      background:#00ff66;
+      background:#0f0;
       margin:10px auto 40px;
     }
 
@@ -142,7 +127,7 @@
     }
 
     .card:hover {
-      box-shadow:0 0 20px #00ff66;
+      box-shadow:0 0 20px #0f0;
       transform:translateY(-6px);
     }
 
@@ -151,17 +136,12 @@
       overflow:hidden;
       opacity:0;
       transition:0.4s;
+      margin-top:10px;
     }
 
     .card.active .desc {
       max-height:120px;
       opacity:1;
-    }
-
-    /* STATS */
-    .stats {
-      font-size: 40px;
-      margin-top: 20px;
     }
 
     /* CTA */
@@ -171,13 +151,13 @@
     }
 
     /* MUSIC BUTTON */
-    .music-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 10px;
-      border: 1px solid #00ff66;
-      cursor: pointer;
+    .music {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      padding:10px;
+      border:1px solid #0f0;
+      cursor:pointer;
     }
 
   </style>
@@ -185,12 +165,7 @@
 
 <body>
 
-<div class="nav">
-  <a href="#about">ABOUT</a>
-  <a href="#games">GAMES</a>
-  <a href="#founders">FOUNDERS</a>
-</div>
-
+<!-- ENTRY -->
 <div id="entry">
   <h1>3 HORIZONS</h1>
   <p>CLICK TO ENTER</p>
@@ -202,19 +177,21 @@
   <img src="./logo.png">
   <div class="glitch">3 HORIZONS</div>
   <p>Dominate. Adapt. Conquer.</p>
-  <button class="btn" onclick="joinDiscord()">JOIN DISCORD</button>
+  <button class="btn" onclick="join()">JOIN DISCORD</button>
 </div>
 
-<section id="about">
+<section>
   <h2>ABOUT</h2>
   <div class="line"></div>
-  <p>We hit <b>300+ members in days</b></p>
-  <div class="stats" id="counter">0</div>
+  <p>Fast-growing esports org.</p>
+  <p><b>300+ members in days.</b></p>
+  <div id="counter" style="font-size:40px;">0+</div>
 </section>
 
-<section id="games">
+<section>
   <h2>GAMES</h2>
   <div class="line"></div>
+
   <div class="cards">
 
     <div class="card" onclick="toggle(this)">
@@ -224,28 +201,63 @@
 
     <div class="card" onclick="toggle(this)">
       <h3>CS2</h3>
-      <p class="desc">Precision aim battles.</p>
+      <p class="desc">Precision-based combat.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>RAINBOW SIX SIEGE</h3>
+      <p class="desc">Strategic destruction gameplay.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>ROCKET LEAGUE</h3>
+      <p class="desc">Mechanical esports football.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>CALL OF DUTY</h3>
+      <p class="desc">Fast-paced shooter action.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>CLASH ROYALE</h3>
+      <p class="desc">Mobile strategy battles.</p>
     </div>
 
     <div class="card" onclick="toggle(this)">
       <h3>FORTNITE</h3>
-      <p class="desc">Build + fight + survive.</p>
+      <p class="desc">Build and survive fights.</p>
     </div>
 
   </div>
 </section>
 
-<section id="founders">
+<section>
   <h2>FOUNDERS</h2>
   <div class="line"></div>
+
   <div class="cards">
 
     <div class="card" onclick="toggle(this)">
       <h3>3H D3r4y4t</h3>
-      <p class="desc">Vision leader.</p>
+      <p class="desc">Vision and leadership.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>3H FSO</h3>
+      <p class="desc">Team coordination backbone.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>3H mizzu</h3>
+      <p class="desc">Creative aggressive force.</p>
     </div>
 
   </div>
+
+  <p style="margin-top:20px;">
+    🧠 We have coaches to help you become pro.
+  </p>
 </section>
 
 <section class="cta">
@@ -254,20 +266,21 @@
 
 </div>
 
-<div class="music-btn" onclick="toggleMusic()">🔊</div>
+<div class="music" onclick="music()">🔊</div>
 
 <audio id="bgm" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
 <script>
+
 document.getElementById("entry").onclick = () => {
-  document.getElementById("entry").style.display = "none";
-  document.getElementById("main").style.display = "block";
+  document.getElementById("entry").style.display="none";
+  document.getElementById("main").style.display="block";
   document.getElementById("bgm").play();
 };
 
-function joinDiscord() {
+function join(){
   window.open("https://discord.gg/qRxKTtVQz5");
 }
 
@@ -275,24 +288,25 @@ function toggle(el){
   el.classList.toggle("active");
 }
 
-function toggleMusic(){
-  let music = document.getElementById("bgm");
-  music.paused ? music.play() : music.pause();
+function music(){
+  let m=document.getElementById("bgm");
+  m.paused ? m.play() : m.pause();
 }
 
 /* COUNTER */
-let count = 0;
-let target = 300;
-let counter = document.getElementById("counter");
-let interval = setInterval(()=>{
-  count+=5;
-  counter.innerText = count + "+";
-  if(count>=target) clearInterval(interval);
+let c=0;
+let t=300;
+let el=document.getElementById("counter");
+
+let i=setInterval(()=>{
+  c+=5;
+  el.innerText=c+"+";
+  if(c>=t) clearInterval(i);
 },50);
 
-/* SCROLL ANIMATION */
-const sections = document.querySelectorAll("section");
-window.addEventListener("scroll", ()=>{
+/* SCROLL */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
   sections.forEach(sec=>{
     if(sec.getBoundingClientRect().top < window.innerHeight-100){
       sec.style.opacity=1;
@@ -300,6 +314,7 @@ window.addEventListener("scroll", ()=>{
     }
   });
 });
+
 </script>
 
 </body>
