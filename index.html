@@ -1,173 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>3 Horizons Esports</title>
+  <title>3 Horizons Esports</title>
 
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#000;
-  color:#00ff66;
-  overflow-x:hidden;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #00ff66;
+      background: black;
+      overflow-x: hidden;
+    }
 
-/* TOP BAR */
-.topbar{
-  position:fixed;
-  top:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  padding:12px 20px;
-  background:rgba(0,0,0,0.8);
-  border-bottom:1px solid #00ff66;
-  z-index:1000;
-}
+    /* BACKGROUND */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: linear-gradient(270deg, #000, #001a0d, #000, #002b15);
+      background-size: 600% 600%;
+      animation: bgMove 12s ease infinite;
+      z-index: -3;
+    }
 
-/* HERO */
-.hero{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-.hero img{
-  width:140px;
-  filter:drop-shadow(0 0 20px #00ff66);
-  animation:float 3s infinite;
-}
+    body::after {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background:
+        linear-gradient(rgba(0,255,102,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,102,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 8s linear infinite;
+      z-index: -2;
+    }
 
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
+    @keyframes gridMove {
+      from { transform: translate(0,0); }
+      to { transform: translate(50px,50px); }
+    }
 
-h1{
-  font-size:70px;
-  letter-spacing:5px;
-  margin:10px 0;
-}
+    /* CURSOR */
+    .cursor-glow {
+      position: fixed;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(0,255,102,0.2), transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
 
-/* BUTTON */
-.btn{
-  margin-top:20px;
-  padding:14px 30px;
-  border:2px solid #00ff66;
-  background:transparent;
-  color:#00ff66;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.3s;
-}
+    /* ENTRY */
+    #entry {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 999;
+      cursor: pointer;
+    }
 
-.btn:hover{
-  background:#00ff66;
-  color:#000;
-  box-shadow:0 0 25px #00ff66;
-}
+    #entry h1 {
+      font-size: 60px;
+      text-shadow: 0 0 25px #00ff66;
+      animation: pulse 2s infinite;
+    }
 
-/* SECTIONS */
-section{
-  opacity:0;
-  transform:translateY(40px);
-  transition:0.6s ease;
-}
+    @keyframes pulse {
+      0%,100% { text-shadow: 0 0 10px #00ff66; }
+      50% { text-shadow: 0 0 40px #00ff66; }
+    }
 
-h2{
-  font-size:40px;
-  letter-spacing:3px;
-}
+    #main { display:none; }
 
-/* CARDS */
-.cards{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:20px;
-}
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+    }
 
-.card{
-  width:250px;
-  padding:20px;
-  border:1px solid #00ff66;
-  cursor:pointer;
-  transition:0.3s;
-  background:rgba(0,0,0,0.6);
-}
+    .hero img {
+      width:160px;
+      animation: float 3s ease-in-out infinite, glow 2s infinite alternate;
+    }
 
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 20px #00ff66;
-}
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
 
-/* CTA */
-.cta{
-  padding:120px 20px;
-  font-size:26px;
-}
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 10px #00ff66); }
+      to { filter: drop-shadow(0 0 35px #00ff66); }
+    }
 
-</style>
+    .glitch {
+      font-size: 80px;
+      letter-spacing: 7px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 14px 35px;
+      background: transparent;
+      border: 2px solid #00ff66;
+      color: #00ff66;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background:#00ff66;
+      color:black;
+      box-shadow:0 0 20px #00ff66;
+    }
+
+    section {
+      padding: 100px 20px;
+      text-align:center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 0.6s;
+    }
+
+    h2 {
+      font-size: 42px;
+      letter-spacing: 4px;
+    }
+
+    .line {
+      width:100px;
+      height:4px;
+      background:#00ff66;
+      margin:15px auto 40px;
+      box-shadow:0 0 15px #00ff66;
+    }
+
+    /* CARDS */
+    .cards {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:25px;
+    }
+
+    .card {
+      width:280px;
+      padding:25px;
+      background:rgba(0,0,0,0.6);
+      border:1px solid #003b1f;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .card:hover {
+      border-color:#00ff66;
+      box-shadow:0 0 20px #00ff66;
+      transform:translateY(-6px);
+    }
+
+    .desc {
+      max-height:0;
+      overflow:hidden;
+      opacity:0;
+      transition:0.4s;
+      color:#aaffcc;
+      font-size:14px;
+      margin-top:10px;
+    }
+
+    .card.active .desc {
+      max-height:120px;
+      opacity:1;
+    }
+
+    /* CTA */
+    .cta {
+      padding:120px 20px;
+      font-size:28px;
+      text-align:center;
+      text-shadow:0 0 20px #00ff66;
+    }
+
+    .coach {
+      margin-top:20px;
+      font-size:18px;
+      opacity:0.9;
+    }
+
+  </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div>3 HORIZONS ESPORTS</div>
-  <div>300+ MEMBERS</div>
-</div>
+<div class="cursor-glow" id="glow"></div>
 
-<!-- HERO -->
-<div class="hero">
-  <img src="./logo.png" alt="3H Logo">
+<!-- ENTRY -->
+<div id="entry">
   <h1>3 HORIZONS</h1>
-  <p>Dominate. Adapt. Conquer.</p>
-
-  <button class="btn" onclick="window.open('https://discord.gg/qRxKTtVQz5','_blank')">
-    JOIN DISCORD
-  </button>
+  <p>CLICK TO ENTER</p>
 </div>
 
+<!-- MAIN -->
+<div id="main">
+
+<div class="hero">
+  <img src="logo.png">
+  <img src="./logo.png" alt="3H Logo">
+  <div class="glitch">3 HORIZONS</div>
+
+  <img src="./logo.png" alt="3H Logo" style="width:150px;">
+
+  <h1 style="margin-top:20px;">
+    3 HORIZONS
+  </h1>
+
+  <p>Dominate. Adapt. Conquer.</p>
+  <button class="btn" onclick="joinDiscord()">JOIN DISCORD</button>
+</div>
+
+</div>
 <!-- ABOUT -->
 <section>
   <h2>ABOUT US</h2>
-  <p>We are a competitive esports organization focused on growth, teamwork, and performance.</p>
-  <p><b>Reached 300+ members in just days.</b></p>
+  <div class="line"></div>
+  <p>We are a fast-growing esports organization building dominance across multiple competitive titles.</p>
+  <p><b>300+ members in just a few days.</b></p>
 </section>
 
-<!-- GAMES -->
+<!-- GAMES (CLICKABLE) -->
 <section>
   <h2>GAMES WE PLAY</h2>
+  <div class="line"></div>
 
   <div class="cards">
-    <div class="card">VALORANT</div>
-    <div class="card">CS2</div>
-    <div class="card">FORTNITE</div>
-    <div class="card">RAINBOW SIX SIEGE</div>
-    <div class="card">ROCKET LEAGUE</div>
-    <div class="card">CALL OF DUTY</div>
-    <div class="card">CLASH ROYALE</div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>VALORANT</h3>
+      <p class="desc">Tactical FPS focus on aim, strategy and team coordination.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>CS2</h3>
+      <p class="desc">Precision-based competitive FPS gameplay.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>RAINBOW SIX SIEGE</h3>
+      <p class="desc">High IQ tactical destruction and defense gameplay.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>ROCKET LEAGUE</h3>
+      <p class="desc">Fast mechanical esports car football battles.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>CALL OF DUTY</h3>
+      <p class="desc">Fast-paced competitive shooter experience.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>CLASH ROYALE</h3>
+      <p class="desc">Mobile strategy + timing based esports battles.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>FORTNITE</h3>
+      <p class="desc">Building + survival competitive fights.</p>
+    </div>
+
   </div>
 </section>
 
 <!-- FOUNDERS -->
 <section>
   <h2>FOUNDERS</h2>
+  <div class="line"></div>
 
   <div class="cards">
-    <div class="card">3H D3r4y4t</div>
-    <div class="card">3H FSO</div>
-    <div class="card">3H mizzu</div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>3H D3r4y4t</h3>
+      <p class="desc">Strategic leader shaping vision, growth and direction.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>3H FSO</h3>
+      <p class="desc">Core structure and competitive coordination backbone.</p>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+      <h3>3H mizzu</h3>
+      <p class="desc">Creative aggression and gameplay innovation force.</p>
+    </div>
+
   </div>
 
-  <p style="margin-top:20px;">
-    🧠 We also have coaches to help players become pro.
-  </p>
+  <div class="coach">
+    🧠 We also have professional coaches helping players improve and become pro-level competitors.
+  </div>
 </section>
 
 <!-- CTA -->
@@ -175,5 +327,39 @@ h2{
   YOU PLAY? PLAY GOOD. JOIN 3H NOW!
 </section>
 
+</div>
+
+<script>
+  document.getElementById("entry").onclick = () => {
+    document.getElementById("entry").style.display = "none";
+    document.getElementById("main").style.display = "block";
+  };
+
+  function joinDiscord() {
+    window.open("https://discord.gg/qRxKTtVQz5", "_blank");
+  }
+
+  function toggle(el) {
+    el.classList.toggle("active");
+  }
+
+  const glow = document.getElementById("glow");
+  document.addEventListener("mousemove", e => {
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+  });
+
+  const sections = document.querySelectorAll("section");
+  window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+      if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
+        sec.style.opacity = 1;
+        sec.style.transform = "translateY(0)";
+      }
+    });
+  });
+</script>
+
 </body>
+</html>
 </html>
